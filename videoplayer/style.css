@@ -1,0 +1,14 @@
+body {
+    background: #141414;
+    color: #efefef;
+}
+
+#header {
+    width: 100%;
+    text-align: center;
+    color: #efefef;
+}
+
+#player {
+    margin: 0 auto;
+}
