@@ -1,12 +1,19 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
 body {
     --brand-bg: #141414;
+    --brand-bg-light: #323232;
     --brand-text: #efefef;
     --brand-highlight: #e50914;
+
+    --brand-font: "Open Sans", Calibri, "Trebuchet MS", sans-serif;
 
     --ui-block-height: 36px;
 
     background: var(--brand-bg);
     color: var(--brand-text);
+    font-family: var(--brand-font);
 }
 
 #header {
@@ -29,9 +36,10 @@ body {
 
 .episode-picker,
 .episode-picker-confirm {
-    background: var(--brand-bg);
-    border: 3px solid var(--brand-text);
+    background: var(--brand-bg-light);
+    border: 3px solid var(--brand-bg-light);
     color: var(--brand-text);
+    font-size: 18px;
     line-height: var(--ui-block-height);
 }
 
