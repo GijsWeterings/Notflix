@@ -8,9 +8,14 @@
         <script src="app.js" async></script>
     </head>
     <body>
-        <h1 id="header">Notflix</h1>
-        <select name="Pick an episode" id="episode-list"></select>
-        
-        <video id="player" width="1280" height="720" controls></video>
+        <img src="images/logo.png" alt="notflix" id="header"></img>
+        <div class="main-content">
+            <div class="selector">
+                <select name="Pick an episode" id="episode-list" class="episode-picker"></select>
+                <button class="episode-picker-confirm">Play</button>
+            </div>
+            
+            <video id="player" width="1280" height="720" controls></video>
+        </div>
     </body>
 </html>
