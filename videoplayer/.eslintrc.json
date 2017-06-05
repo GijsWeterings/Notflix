@@ -29,6 +29,7 @@
             "error",
             "as-needed"
         ],
+        "no-unused-vars": "warn",
         "no-console": "off"
     }
 }

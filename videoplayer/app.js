@@ -1,5 +1,6 @@
 const episodesList = document.querySelector("#episode-list");
 const videoPlayer = document.querySelector("#player");
+const subtitles = document.querySelector("#subtitles");
 let episodes = {};
 
 fetch("/episodes.json")
@@ -14,3 +15,18 @@ fetch("/episodes.json")
   });
 
 videoPlayer.setAttribute("src", "videos/House.Of.Cards.S01E01.720p.BluRay.x265.mp4");
+subtitles.setAttribute("src", "videos/subtitles/HOC.S01E01.vtt");
+
+function playPause() {
+  if(videoPlayer.paused || videoPlayer.ended)
+    videoPlayer.play();
+  else
+    videoPlayer.pause();
+}
+
+function goFullScreen() {
+  if (videoPlayer.requestFullscreen)
+    videoPlayer.requestFullscreen();
+  else
+    videoPlayer.webkitRequestFullscreen(); // Damn it Chrome
+}
