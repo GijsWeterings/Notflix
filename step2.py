@@ -26,7 +26,3 @@ print(result.shape)
 cv2.imwrite('similaritymatrix.png', result)
 cv2.waitKey(0)
 pool.close()
-      
-    # return map(lambda j: cosineSim(ep1[:,i,0],ep2[:,j,0]), range(7200))
-    # img[i,j] = res
-    # img[j,i] = res
