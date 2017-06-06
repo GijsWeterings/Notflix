@@ -1,5 +1,5 @@
 FROM python:3.6
-MAINTAINER Josip Janzic <josip.janzic@gmail.com>
+LABEL maintainer "Gijs Weterings <info@gijsweterings.nl>"
 
 RUN apt-get update && \
         apt-get install -y \
@@ -19,7 +19,8 @@ RUN apt-get update && \
         libjasper-dev \
         libavformat-dev \
         libpq-dev \
-        libgtk2.0-dev
+        libgtk2.0-dev \
+        libcanberra-gtk-module
 
 RUN pip install numpy
 
@@ -50,3 +51,9 @@ RUN wget https://github.com/Itseez/opencv/archive/3.2.0.zip \
 && rm -r /opencv-3.2.0
 
 RUN pip install flake8 pep8 --upgrade
+
+ENV DISPLAY unix:1
+
+WORKDIR /videos
+
+CMD bash
