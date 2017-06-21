@@ -1,9 +1,12 @@
 import cv2
 import numpy as np
 import math
+import json
 from functools import reduce
 
 DEBUG = False
+
+FPS = 24
 
 MASK_THRESHOLD_MINIMUM = 200
 MASK_THRESHOLD_MAXIMUM = 255
@@ -49,4 +52,37 @@ def fitHoughLine(path="similaritymatrix.png"):
 
 
 if __name__ == "__main__":
-    print(fitHoughLine())
+    firstEpisode = "videos/House.Of.Cards.S01E01.720p.BluRay.x265.mp4"
+    secondEpisode = "videos/House.Of.Cards.S01E02.720p.BluRay.x265.mp4"
+    similaritymatrix = "similaritymatrix.png"
+
+    fittedIntroLine = fitHoughLine(similaritymatrix)
+    timestamps = list(map(lambda value: float(value) / FPS, fittedIntroLine))
+
+    episode1Data = {
+        'series': 'House of Cards',
+        'season': '1',
+        'episode': '1',
+        'file': firstEpisode,
+        'intro': {
+            'start': str(timestamps[0]),
+            'end': str(timestamps[2])
+        }
+    }
+
+    episode2Data = {
+        'series': 'House of Cards',
+        'season': '1',
+        'episode': '2',
+        'file': secondEpisode,
+        'intro': {
+            'start': str(timestamps[1]),
+            'end': str(timestamps[3])
+        }
+    }
+
+    with open('ep1.json', "w") as outfile:
+        json.dump(episode1Data, outfile)
+
+    with open('ep2.json', "w") as outfile:
+        json.dump(episode2Data, outfile)
