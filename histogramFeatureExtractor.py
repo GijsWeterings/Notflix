@@ -7,7 +7,7 @@ DEBUG = True
 FPS = 24
 NUMBER_OF_FRAMES_TO_SAMPLE = FPS * 60 * 5
 
-def extractFeaturesToFile(inputVideo="videos/House.Of.Cards.S01E01.720p.BluRay.x265.mp4", filename="ep1.png"):
+def extractFeaturesToFile(inputVideo="videos/House.Of.Cards.S01E01.720p.BluRay.x265.mp4", filename="pllep2.png"):
     """
     Runs the extractFeatures and writes the resulting file to disk.
     """
@@ -36,8 +36,8 @@ def extractFeatures(inputVideo):
                 print("frame dimensions: ", colorimg.shape)
                 print("histogram shape: ", normalizedFrameHist.shape)
                 print("totalHist shape: ", videoHistTotal.shape)
-                plt.plot(normalizedFrameHist)
-                plt.show()
+                # plt.plot(normalizedFrameHist)
+                # plt.show()
             videoHistTotal = np.concatenate([videoHistTotal, frameHist], axis=1)
             
     # Remove initial column
@@ -47,4 +47,4 @@ def extractFeatures(inputVideo):
     return videoHistTotal
 
 if __name__ == "__main__":
-    extractFeaturesToFile()
+    extractFeaturesToFile(inputVideo="videos/pll2.mp4")

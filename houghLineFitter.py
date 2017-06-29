@@ -4,11 +4,11 @@ import math
 import json
 from functools import reduce
 
-DEBUG = False
+DEBUG = True
 
 FPS = 24
 
-MASK_THRESHOLD_MINIMUM = 200
+MASK_THRESHOLD_MINIMUM = 230
 MASK_THRESHOLD_MAXIMUM = 255
 
 LINE_ANGLE = 0.25 * np.pi
@@ -16,7 +16,7 @@ LINE_MIN_VOTES = 2500
 
 NUMBER_OF_SAMPLES = 60
 
-def fitHoughLine(path="similaritymatrix.png"):
+def fitHoughLine(path="pllsimilaritymatrix.png"):
     """
     Step 3: Using the similarity matrix as an input, we threshold the matrix to a 
     black/white mask, and then apply a probibalistic approach to drawn a Hough line.
@@ -52,9 +52,9 @@ def fitHoughLine(path="similaritymatrix.png"):
 
 
 if __name__ == "__main__":
-    firstEpisode = "videos/House.Of.Cards.S01E01.720p.BluRay.x265.mp4"
-    secondEpisode = "videos/House.Of.Cards.S01E02.720p.BluRay.x265.mp4"
-    similaritymatrix = "similaritymatrix.png"
+    firstEpisode = "videos/pll1.mp4"
+    secondEpisode = "videos/pll2.mp4"
+    similaritymatrix = "pllsimilaritymatrix.png"
 
     fittedIntroLine = fitHoughLine(similaritymatrix)
     timestamps = list(map(lambda value: float(value) / FPS, fittedIntroLine))
