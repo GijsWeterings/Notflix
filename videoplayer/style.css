@@ -57,6 +57,54 @@ body {
     display: block;
 }
 
+.videoContainer {
+    display: block;
+    width: 1280px;
+    height: 720px;
+}
+
+#progress-bar-highlights {
+    position: relative;
+    bottom: var(--ui-block-height);
+}
+
+#progress-bar-highlights span {
+    position: relative;
+    display: block;
+    height: var(--ui-block-height);
+    background: var(--brand-highlight);
+}
+
+#progressIndicator {
+    background: yellow;
+    position: relative;
+    display: block;
+    height: var(--ui-block-height);
+    width: 2px;
+}
+
+#skipIntro {
+    position: relative;
+    left: 1150px;
+    bottom: 120px;
+    opacity: 0;
+    padding: 4px;
+    background: none;
+    font-size: 14pt;
+    border: 2px solid var(--brand-text);
+    color: var(--brand-text);
+
+    -webkit-transition: opacity 0.5s ease-in-out;
+    -moz-transition: opacity 0.5s ease-in-out;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.timekeep {
+    margin: 0 5px;
+    height: var(--ui-block-height);
+    line-height: var(--ui-block-height);
+}
+
 .video-controls {
     display: flex;
     width: 100%;

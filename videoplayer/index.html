@@ -16,14 +16,24 @@
                 <button class="episode-picker-confirm">Play</button>
             </div>
             
-            <video id="player" width="1280" height="720">
-                <track id="subtitles" kind="subtitles" srclang="en" label="English" default>
-            </video>
+            <div class="videoContainer">
+                <video id="player" width="1280" height="720">
+                    <track id="subtitles" kind="subtitles" srclang="en" label="English" default>
+                </video>
+                <button id="skipIntro">Skip intro</button>
+            </div>
 
             <div class="video-controls">
                 <button id="playpause" type="button" onclick="playPause()"><i class="fa fa-play fa-lg"></i></button>
                 <div class="progress">
+                    <span id="progressIndicator"></span>
                     <span id="progress-bar"></span>
+                    <div id="progress-bar-highlights"></div>
+                </div>
+                <div class="timekeep">
+                    <span id="currentTime">00:00:00</span>
+                    /
+                    <span id="videoDuration">00:00:00</span>
                 </div>
                 <button id="fs" type="button" onclick="goFullScreen()"><i class="fa fa-arrows-alt fa-lg"></i></button>
             </div>

@@ -1,0 +1,11 @@
+{
+    "series": "House of Cards",
+    "season": "1",
+    "episode": "1",
+    "src": "videos/House.Of.Cards.S01E01.720p.BluRay.x265.mp4",
+    "subtitles": "subs/House.Of.Cards.S01E01.720p.BluRay.x265.vtt",
+    "intro": {
+        "start": "194.16666666666666",
+        "end": "299.6666666666667"
+    }
+}
