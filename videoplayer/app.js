@@ -8,8 +8,6 @@ let episodes = {};
 let metadata = {};
 let duration = 0;
 
-let scenes = [5, 63, 137, 150, 190, 217, 254, 266, 270, 324, 367, 448, 490, 736, 1070, 1234, 1292, 1309, 1322, 1425, 1465, 1630, 2511, 2542, 2773, 2813, 3024, 3030]
-
 loadEpisodeInfo("/ep1.json");
 
 fetch("/episodes.json")
@@ -29,7 +27,7 @@ videoPlayer.addEventListener("loadedmetadata", videoMetaData => {
   duration = videoMetaData.srcElement.duration;
   videoDuration.innerHTML = formatSeconds(duration);
   addProgressBarHighlight(metadata.intro, duration);
-  addSceneShortcuts(scenes, duration);
+  addSceneShortcuts(metadata.scenes, duration);
 });
 
 videoPlayer.addEventListener("timeupdate", event => {
