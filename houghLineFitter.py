@@ -12,7 +12,7 @@ MASK_THRESHOLD_MINIMUM = 230
 MASK_THRESHOLD_MAXIMUM = 255
 
 LINE_ANGLE = 0.25 * np.pi
-LINE_MIN_VOTES = 2500
+LINE_MIN_VOTES = 250
 
 NUMBER_OF_SAMPLES = 60
 
@@ -44,8 +44,8 @@ def fitHoughLine(path="pllsimilaritymatrix.png"):
             cv2.line(similaritymatrixImg,(x1,y1),(x2,y2),(0,0,255),2)
         cv2.line(similaritymatrixImg,(candidateLine[0], candidateLine[1]),(candidateLine[2],candidateLine[3]),(255,0,0), 3)
 
-        cv2.imwrite('tresholdimg.jpg',thresholdImg)
-        cv2.imwrite('houghlines.jpg', similaritymatrixImg)
+        cv2.imwrite('plltresholdimg.jpg',thresholdImg)
+        cv2.imwrite('pllhoughlines.jpg', similaritymatrixImg)
 
     # Return the best fitting line
     return candidateLine
@@ -54,7 +54,7 @@ def fitHoughLine(path="pllsimilaritymatrix.png"):
 if __name__ == "__main__":
     firstEpisode = "videos/pll1.mp4"
     secondEpisode = "videos/pll2.mp4"
-    similaritymatrix = "pllsimilaritymatrix.png"
+    similaritymatrix = "combinedSimilarityMatrix.png"
 
     fittedIntroLine = fitHoughLine(similaritymatrix)
     timestamps = list(map(lambda value: float(value) / FPS, fittedIntroLine))
@@ -81,8 +81,8 @@ if __name__ == "__main__":
         }
     }
 
-    with open('ep1.json', "w") as outfile:
+    with open('pllep1.json', "w") as outfile:
         json.dump(episode1Data, outfile)
 
-    with open('ep2.json', "w") as outfile:
+    with open('pllep2.json', "w") as outfile:
         json.dump(episode2Data, outfile)

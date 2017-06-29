@@ -30,7 +30,7 @@ def calculateRow(i):
 episode1 = np.array(cv2.imread("pllep1.png"))
 episode2 = np.array(cv2.imread("pllep2.png"))
 
-pool = Pool(8)
+pool = Pool(NUM_CPU_CORES)
 
 result = np.array(pool.map(calculateRow, range(7200)))
 cv2.imwrite('pllsimilaritymatrix.png', result)
