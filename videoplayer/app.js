@@ -8,6 +8,8 @@ let episodes = {};
 let metadata = {};
 let duration = 0;
 
+let scenes = [5, 63, 137, 150, 190, 217, 254, 266, 270, 324, 367, 448, 490, 736, 1070, 1234, 1292, 1309, 1322, 1425, 1465, 1630, 2511, 2542, 2773, 2813, 3024, 3030]
+
 loadEpisodeInfo("/ep1.json");
 
 fetch("/episodes.json")
@@ -27,12 +29,13 @@ videoPlayer.addEventListener("loadedmetadata", videoMetaData => {
   duration = videoMetaData.srcElement.duration;
   videoDuration.innerHTML = formatSeconds(duration);
   addProgressBarHighlight(metadata.intro, duration);
+  addSceneShortcuts(scenes, duration);
 });
 
 videoPlayer.addEventListener("timeupdate", event => {
   const currentTime = document.querySelector("#currentTime");
 
-  const timestamp = convertMsToSeconds(event.timeStamp);
+  const timestamp = event.srcElement.currentTime;
   currentTime.innerHTML = formatSeconds(timestamp);
   const deltaToStart = timestamp - parseInt(metadata.intro.start);
   const deltaToEnd = timestamp - parseInt(metadata.intro.end);
@@ -43,8 +46,7 @@ videoPlayer.addEventListener("timeupdate", event => {
     skipButton.style.opacity = 0;
   }
 
-  progressIndicator.style.left = String(100 * timestamp / videoPlayer.duration).replace(",", ".") + "%";
-  console.log(String(100 * timestamp / videoPlayer.duration) + "%");
+  progressIndicator.style.transform = "translateX(" + String(100 * 95 * parseFloat(timestamp) / event.srcElement.duration) + "%)";
 
 });
 
@@ -67,13 +69,23 @@ function loadEpisodeInfo(episodeJSONPath) {
 function addProgressBarHighlight(highlightTimestamps, totalDuration) {
   const progressBarHighlights = document.querySelector("#progress-bar-highlights");
   const highlight = document.createElement("span");
+  highlight.classList.add("intro");
   highlight.style.width = String(Math.round(((parseInt(highlightTimestamps.end) - parseInt(highlightTimestamps.start)) / totalDuration) * 100)) + "%";
   highlight.style.left = String(Math.round(100 * parseInt(highlightTimestamps.start) / totalDuration)) + "%";
   progressBarHighlights.appendChild(highlight);
 }
 
-function convertMsToSeconds(timeInMs) {
-  return Math.floor(timeInMs / 1000);
+function addSceneShortcuts(sceneStarts, totalDuration) {
+  const progressBarHighlights = document.querySelector("#progress-bar-highlights");
+  sceneStarts.forEach(sceneStart => {
+    const sceneShortcut = document.createElement("span");
+    sceneShortcut.style.left = String(Math.round(100 * parseInt(sceneStart) / totalDuration)) + "%";
+    progressBarHighlights.appendChild(sceneShortcut);
+    sceneShortcut.addEventListener("click", () => {
+      console.log(sceneStart);
+      videoPlayer.currentTime = sceneStart;
+    });
+  });
 }
 
 function formatSeconds(timeInSec) {
