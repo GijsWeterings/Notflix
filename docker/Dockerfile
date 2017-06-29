@@ -22,7 +22,7 @@ RUN apt-get update && \
         libgtk2.0-dev \
         libcanberra-gtk-module
 
-RUN pip install numpy
+RUN pip install numpy matplotlib scipy
 
 WORKDIR /
 RUN wget https://github.com/Itseez/opencv/archive/3.2.0.zip \
