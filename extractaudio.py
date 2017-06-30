@@ -2,6 +2,7 @@ import librosa
 from scipy import spatial
 from scipy.signal import resample
 import numpy as np
+import cv2
 
 def cosine_similarity(x, y):
      return 1 - spatial.distance.cosine(x, y)
@@ -30,11 +31,12 @@ def mfccs(path):
     number_of_seconds = int(np.round(audio_duration))
     return np.array(resample(mfccs_matrix.transpose(), number_of_seconds))
 
-ep1 = mfccs("videos/pll1.mp4")
-ep2 = mfccs("videos/pll2.mp4")
+ep1 = mfccs("videos/House.Of.Cards.S01E03.720p.BluRay.x265.mp4")
+ep2 = mfccs("videos/House.Of.Cards.S01E04.720p.BluRay.x265.mp4")
 
-np.save("np/ep1.npy", ep1)
-np.save("np/ep2.npy", ep2)
+scaledep1 = cv2.resize(ep1, (7200, 7200), interpolation=cv2.INTER_CUBIC)
+scaledep2 = cv2.resize(ep2, (7200, 7200), interpolation=cv2.INTER_CUBIC)
 
-print(ep1.shape)
-print(ep2.shape)
+
+np.save("np/House.Of.Cards.S01E03.720p.BluRay.x265.npy", scaledep1)
+np.save("np/House.Of.Cards.S01E04.720p.BluRay.x265.npy", scaledep2)
