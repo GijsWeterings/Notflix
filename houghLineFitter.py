@@ -8,13 +8,13 @@ DEBUG = True
 
 FPS = 24
 
-MASK_THRESHOLD_MINIMUM = 230
+MASK_THRESHOLD_MINIMUM = 200
 MASK_THRESHOLD_MAXIMUM = 255
 
 LINE_ANGLE = 0.25 * np.pi
-LINE_MIN_VOTES = 250
+LINE_MIN_VOTES = 400
 
-NUMBER_OF_SAMPLES = 60
+NUMBER_OF_SAMPLES = 10
 
 def fitHoughLine(path="pllsimilaritymatrix.png"):
     """
@@ -26,7 +26,7 @@ def fitHoughLine(path="pllsimilaritymatrix.png"):
     """
 
     similaritymatrixImg = cv2.imread(path)
-    grayscaledImg = cv2.cvtColor(similaritymatrixImg,cv2.COLOR_BGR2GRAY)
+    grayscaledImg = cv2.cvtColor(similaritymatrixImg, cv2.COLOR_BGR2GRAY)
 
 
     # Threshold will return a black/white image
@@ -54,7 +54,7 @@ def fitHoughLine(path="pllsimilaritymatrix.png"):
 if __name__ == "__main__":
     firstEpisode = "videos/pll1.mp4"
     secondEpisode = "videos/pll2.mp4"
-    similaritymatrix = "combinedSimilarityMatrix.png"
+    similaritymatrix = "combinedsimilaritymatrix.png"
 
     fittedIntroLine = fitHoughLine(similaritymatrix)
     timestamps = list(map(lambda value: float(value) / FPS, fittedIntroLine))
