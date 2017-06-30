@@ -8,15 +8,15 @@ DEBUG = True
 
 FPS = 24
 
-MASK_THRESHOLD_MINIMUM = 200
+MASK_THRESHOLD_MINIMUM = 190
 MASK_THRESHOLD_MAXIMUM = 255
 
 LINE_ANGLE = 0.25 * np.pi
-LINE_MIN_VOTES = 400
+LINE_MIN_VOTES = 350
 
-NUMBER_OF_SAMPLES = 10
+NUMBER_OF_SAMPLES = 40
 
-def fitHoughLine(path="pllsimilaritymatrix.png"):
+def fitHoughLine(path="combinedSimilarityMatrix.png"):
     """
     Step 3: Using the similarity matrix as an input, we threshold the matrix to a 
     black/white mask, and then apply a probibalistic approach to drawn a Hough line.
@@ -45,16 +45,16 @@ def fitHoughLine(path="pllsimilaritymatrix.png"):
         cv2.line(similaritymatrixImg,(candidateLine[0], candidateLine[1]),(candidateLine[2],candidateLine[3]),(255,0,0), 3)
 
         cv2.imwrite('plltresholdimg.jpg',thresholdImg)
-        cv2.imwrite('pllhoughlines.jpg', similaritymatrixImg)
+        cv2.imwrite('HoC-1-2-houghlines.jpg', similaritymatrixImg)
 
     # Return the best fitting line
     return candidateLine
 
 
 if __name__ == "__main__":
-    firstEpisode = "videos/pll1.mp4"
-    secondEpisode = "videos/pll2.mp4"
-    similaritymatrix = "combinedsimilaritymatrix.png"
+    firstEpisode = "videos/House.Of.Cards.S01E01.720p.BluRay.x265.mp4"
+    secondEpisode = "videos/House.Of.Cards.S01E02.720p.BluRay.x265.mp4"
+    similaritymatrix = "HoC-1-2-combinedSimilarityMatrix.png"
 
     fittedIntroLine = fitHoughLine(similaritymatrix)
     timestamps = list(map(lambda value: float(value) / FPS, fittedIntroLine))
