@@ -27,11 +27,11 @@ def calculateRow(i):
         row[j,0] = cosine_similarity(episode1[:,i,0],episode2[:,j,0])
     return row
 
-episode1 = np.array(cv2.imread("ep1.png"))
-episode2 = np.array(cv2.imread("ep2.png"))
+episode1 = np.array(cv2.imread("pllep1.png"))
+episode2 = np.array(cv2.imread("pllep2.png"))
 
-pool = Pool(8)
+pool = Pool(NUM_CPU_CORES)
 
 result = np.array(pool.map(calculateRow, range(7200)))
-cv2.imwrite('similaritymatrix.png', result)
+cv2.imwrite('pllsimilaritymatrix.png', result)
 pool.close()

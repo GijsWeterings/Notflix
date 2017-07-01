@@ -4,19 +4,19 @@ import math
 import json
 from functools import reduce
 
-DEBUG = False
+DEBUG = True
 
 FPS = 24
 
-MASK_THRESHOLD_MINIMUM = 200
+MASK_THRESHOLD_MINIMUM = 190
 MASK_THRESHOLD_MAXIMUM = 255
 
 LINE_ANGLE = 0.25 * np.pi
-LINE_MIN_VOTES = 2500
+LINE_MIN_VOTES = 350
 
-NUMBER_OF_SAMPLES = 60
+NUMBER_OF_SAMPLES = 40
 
-def fitHoughLine(path="similaritymatrix.png"):
+def fitHoughLine(path="combinedSimilarityMatrix.png"):
     """
     Step 3: Using the similarity matrix as an input, we threshold the matrix to a 
     black/white mask, and then apply a probibalistic approach to drawn a Hough line.
@@ -26,7 +26,7 @@ def fitHoughLine(path="similaritymatrix.png"):
     """
 
     similaritymatrixImg = cv2.imread(path)
-    grayscaledImg = cv2.cvtColor(similaritymatrixImg,cv2.COLOR_BGR2GRAY)
+    grayscaledImg = cv2.cvtColor(similaritymatrixImg, cv2.COLOR_BGR2GRAY)
 
 
     # Threshold will return a black/white image
@@ -44,8 +44,8 @@ def fitHoughLine(path="similaritymatrix.png"):
             cv2.line(similaritymatrixImg,(x1,y1),(x2,y2),(0,0,255),2)
         cv2.line(similaritymatrixImg,(candidateLine[0], candidateLine[1]),(candidateLine[2],candidateLine[3]),(255,0,0), 3)
 
-        cv2.imwrite('tresholdimg.jpg',thresholdImg)
-        cv2.imwrite('houghlines.jpg', similaritymatrixImg)
+        cv2.imwrite('plltresholdimg.jpg',thresholdImg)
+        cv2.imwrite('HoC-1-2-houghlines.jpg', similaritymatrixImg)
 
     # Return the best fitting line
     return candidateLine
@@ -54,7 +54,7 @@ def fitHoughLine(path="similaritymatrix.png"):
 if __name__ == "__main__":
     firstEpisode = "videos/House.Of.Cards.S01E01.720p.BluRay.x265.mp4"
     secondEpisode = "videos/House.Of.Cards.S01E02.720p.BluRay.x265.mp4"
-    similaritymatrix = "similaritymatrix.png"
+    similaritymatrix = "HoC-1-2-combinedSimilarityMatrix.png"
 
     fittedIntroLine = fitHoughLine(similaritymatrix)
     timestamps = list(map(lambda value: float(value) / FPS, fittedIntroLine))
@@ -81,8 +81,8 @@ if __name__ == "__main__":
         }
     }
 
-    with open('ep1.json', "w") as outfile:
+    with open('pllep1.json', "w") as outfile:
         json.dump(episode1Data, outfile)
 
-    with open('ep2.json', "w") as outfile:
+    with open('pllep2.json', "w") as outfile:
         json.dump(episode2Data, outfile)

@@ -20,7 +20,6 @@ def extractFeatures(inputVideo):
     This is then normalized and scaled to a [0, 256] range, and added to the final matrix as a column.
 
     Output: Once all frames are analyzed and added to the final matrix, the image is returned.
-
     """
     cap = cv2.VideoCapture(inputVideo) 
 
@@ -36,9 +35,9 @@ def extractFeatures(inputVideo):
                 print("frame dimensions: ", colorimg.shape)
                 print("histogram shape: ", normalizedFrameHist.shape)
                 print("totalHist shape: ", videoHistTotal.shape)
-                plt.plot(normalizedFrameHist)
-                plt.show()
-            videoHistTotal = np.concatenate([videoHistTotal, frameHist], axis=1)
+                # plt.plot(frameHist)
+                # plt.show()
+            videoHistTotal = np.concatenate([videoHistTotal, normalizedFrameHist], axis=1)
             
     # Remove initial column
     videoHistTotal = np.delete(videoHistTotal, 0, axis=1)
@@ -47,4 +46,4 @@ def extractFeatures(inputVideo):
     return videoHistTotal
 
 if __name__ == "__main__":
-    extractFeaturesToFile()
+    extractFeaturesToFile(inputVideo="videos/pll2.mp4", filename="pllep2.png")

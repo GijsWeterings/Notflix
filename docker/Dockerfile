@@ -20,9 +20,12 @@ RUN apt-get update && \
         libavformat-dev \
         libpq-dev \
         libgtk2.0-dev \
-        libcanberra-gtk-module
+        libcanberra-gtk-module \
+        libav-tools
 
 RUN pip install numpy matplotlib scipy
+RUN pip install librosa
+RUN pip install flake8 pep8 --upgrade
 
 WORKDIR /
 RUN wget https://github.com/Itseez/opencv/archive/3.2.0.zip \
@@ -50,7 +53,6 @@ RUN wget https://github.com/Itseez/opencv/archive/3.2.0.zip \
 && rm /3.2.0.zip \
 && rm -r /opencv-3.2.0
 
-RUN pip install flake8 pep8 --upgrade
 
 ENV DISPLAY unix:1
 
