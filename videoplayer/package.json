@@ -1,0 +1,15 @@
+{
+  "name": "notflix",
+  "version": "1.0.0",
+  "main": "server.js",
+  "repository": "https://github.com/GijsWeterings/MMSR-Project",
+  "author": "Liam Clark, Laura Kreuk, Bojana Urumovska and Gijs Weterings",
+  "license": "MIT",
+  "dependencies": {
+    "eslint": "^3.19.0",
+    "express": "^4.15.3"
+  },
+  "scripts": {
+    "start": "node server.js"
+  }
+}

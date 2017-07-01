@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Notflix</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="style.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+        <script src="app.js" async></script>
+    </head>
+    <body>
+        <img src="images/logo.png" alt="notflix" id="header"></img>
+        <div class="main-content">
+            <div class="selector">
+                <select name="Pick an episode" id="episode-list" class="episode-picker"></select>
+                <button class="episode-picker-confirm">Play</button>
+            </div>
+            
+            <div class="videoContainer">
+                <video id="player" width="1280" height="720">
+                    <track id="subtitles" kind="subtitles" srclang="en" label="English" default>
+                </video>
+                <button id="skipIntro">Skip intro</button>
+            </div>
+
+            <div class="video-controls">
+                <button id="playpause" type="button" onclick="playPause()"><i class="fa fa-play fa-lg"></i></button>
+                <div class="progress">
+                    <span id="progressIndicator"></span>
+                    <span id="progress-bar"></span>
+                    <div id="progress-bar-highlights"></div>
+                </div>
+                <div class="timekeep">
+                    <span id="currentTime">00:00:00</span>
+                    /
+                    <span id="videoDuration">00:00:00</span>
+                </div>
+                <button id="fs" type="button" onclick="goFullScreen()"><i class="fa fa-arrows-alt fa-lg"></i></button>
+            </div>
+        </div>
+    </body>
+</html>
