@@ -7,32 +7,30 @@ import time
 import openface
 from collections import OrderedDict
 
+DEBUG = False
+
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
-eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
 align = openface.AlignDlib('shape_predictor_68_face_landmarks.dat')
 net = openface.TorchNeuralNet('openface.nn4.small2.v1.t7', 77)
 
-# .dlibFacePredictor
-
 def getRep(bgrImg):
     if bgrImg is None:
-        raise Exception("Unable to load image: {}".format("imgPath"))
+        raise Exception("Unable to load image")
     rgbImg = cv2.cvtColor(bgrImg, cv2.COLOR_BGR2RGB)
 
-    start = time.time()
     bb = align.getLargestFaceBoundingBox(rgbImg)
     if bb is None:
+        # No face detected
         return 0
-    start = time.time()
-    #print(rgbImg.shape)
+
     alignedFace = align.align(77, rgbImg, bb,
                               landmarkIndices=openface.AlignDlib.OUTER_EYES_AND_NOSE)
     if alignedFace is None:
-        raise Exception("Unable to align image: {}".format("imgPath"))
+        raise Exception("Unable to align image")
 
     start = time.time()
     rep = net.forward(alignedFace)
-    if False:
+    if DEBUG:
         print("  + OpenFace forward pass took {} seconds.".format(time.time() - start))
         print("Representation:")
         print(rep)
@@ -50,16 +48,10 @@ def labelMatches(matches, tupleLabel):
     return OrderedDict((x, True) for x in result).keys()
 
 
-#img = cv2.imread('testpicGOT.png')
 cap = cv2.VideoCapture('testEpisode.mp4')
 
-
-#fourcc = cv2.CV_FOURCC('X','2','6','4')#cap.get(cv2.CAP_PROP_FRAME_COUNT)
-#fourcc = cv2.VideoWriter_fourcc(*'XVID')
 fourcc = cv2.cv.CV_FOURCC('X','V','I','D')
 fps = cap.get(cv2.cv.CV_CAP_PROP_FPS)
-# to do : cap.get(cv2.CAP_PROP_FPS)
-#get(cv2.cv.CV_CAP_PROP_FPS)
 frameSize = (int(cap.get(cv2.cv.CV_CAP_PROP_FRAME_WIDTH)),int(cap.get(cv2.cv.CV_CAP_PROP_FRAME_HEIGHT)))
 videoWrite = cv2.VideoWriter('example.mp4', int(fourcc), int(fps), frameSize, 1)
 
@@ -76,11 +68,10 @@ while(nframe < 33):
         crop_img = old_frame[y: y + h, x: x + w]
         cv2.imwrite("faces/frame" + str(nframe) + "face" + str(face) + ".png", crop_img)
         face = face + 1
-        #eyes = eye_cascade.detectMultiScale(roi_gray)
-        #for (ex,ey,ew,eh) in eyes:
-            #cv2.rectangle(old_frame,(ex,ey),(ex+ew,ey+eh),(0,255,0),2)
+
     videoWrite.write(old_frame)
     nframe = nframe + 1
+
 framess = []
 framesID = []
 for frame in range(nframe):
@@ -93,9 +84,6 @@ for frame in range(nframe):
         Y_data.append(myFile)
     framess.append(X_data)
     framesID.append(Y_data)
-# framess.append([cv2.imread("faces/frame32face4.png")])
-# framesID.append(["faces/frame32face4.png"])
-
 
 matchingFaces = []
 for (frame1, frame2) in itertools.combinations(framess, 2):
@@ -107,13 +95,13 @@ for (frame1, frame2) in itertools.combinations(framess, 2):
                 com2 = (framess.index(frame2),frame2.index(face2) + 1)
                 paired = (com1,com2)
                 matchingFaces.append(paired)
-                # print (matchingFaces)
 
-
-                #print("Frame1: " + str(framesID[framess.index(frame1)]) + " Frame2: " + str(framesID[framess.index(frame2)]))
-                #print("Frame1: " + str(framess.index(frame1)) + " Frame2: " + str(framess.index(frame2)))
-                #print ("Face1 : " + str ((frame1.index(face1)) + 1))+ " Face2: " + str(frame2.index(face2) + 1)
-                #print("  + Squared l2 distance between representations: {:0.3f}".format(np.dot(d, d)))
+                if DEBUG:
+                    print (matchingFaces)
+                    print("Frame1: " + str(framesID[framess.index(frame1)]) + " Frame2: " + str(framesID[framess.index(frame2)]))
+                    print("Frame1: " + str(framess.index(frame1)) + " Frame2: " + str(framess.index(frame2)))
+                    print ("Face1 : " + str ((frame1.index(face1)) + 1))+ " Face2: " + str(frame2.index(face2) + 1)
+                    print("  + Squared l2 distance between representations: {:0.3f}".format(np.dot(d, d)))
 labels = {}
 while(matchingFaces != []):
     eigenFace = str(matchingFaces[0][0])
@@ -122,4 +110,4 @@ while(matchingFaces != []):
     labels[eigenFace] = result
 
 print(labels.keys())
-#cv2.imwrite("firstFramesFaceDet.png", old_frame)
+print(labels)
